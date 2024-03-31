@@ -1,11 +1,13 @@
 body {
   background-image: url("/src/weather-photo.jpg");
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   font-family: "Roboto", sans-serif;
 }
 
 a {
-  color: #885df1;
+  color: #36525d;
 }
 
 .weather-app {
@@ -35,7 +37,7 @@ header {
 .search-form-button {
   margin-left: 5px;
   font-size: 16px;
-  background-color: #885df1;
+  background-color: #36525d;
   color: white;
   border: none;
   padding: 20px;
