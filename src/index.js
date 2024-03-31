@@ -17,8 +17,8 @@ function displayTemperature(response) {
   temperatureElement.innerHTML = Math.round(temperature);
   iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class="current-temperature-icon"
     />`;
+  getForecast(response.data.city);
 }
-getForecast(response.data.city);
 
 function formatDate(date) {
   let minutes = date.getMinutes();
@@ -62,28 +62,27 @@ function handleSearchSubmit(event) {
 }
 
 function formatDate(timestamp) {
-  let date = new date(timestamp * 1000);
+  let date = new Date(timestamp * 1000);
   let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  return days(date.getDay());
+  return days[date.getDay()];
 }
 
 function getForecast(city) {
   let apiKey = "cba3eff040006t1b3be751419edo9c87";
-  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}$units=metric`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
 
   axios(apiUrl).then(displayForecast);
 }
 
 function displayForecast(response) {
-  let forecastHtml = "";
+  let forecastHtml = `<div class="weather-forecast">`;
 
   response.data.daily.forEach(function (day, index) {
     if (index < 5) {
       forecastHtml =
         forecastHtml +
-        `
-    <div class="weather-forecast-day">
+        `<div class="weather-forecast-day">
               <div class="weather-forecast-date">${formatDate(day.time)}</div>
               <br/>
               <img src="${
@@ -98,10 +97,10 @@ function displayForecast(response) {
                   day.temperature.minimum
                 )}°</div>
               </div>
-          </div>`;
+            </div>`;
     }
   });
-
+  forecastHtml = forecastHtml + `</div>`;
   let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML = forecastHtml;
 }
@@ -109,4 +108,4 @@ function displayForecast(response) {
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
-searchCity("Paris");
+searchCity("Nigeria");
